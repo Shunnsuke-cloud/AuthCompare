@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AuthCompare | 認証のしくみを、比べて学ぶ。</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header class="topbar"><a href="/" class="brand"><span class="logo">a.</span> AuthCompare</a><span class="local"><i></i> LOCAL LEARNING LAB</span></header>
+<main>
+  <div class="eyebrow">WEB AUTHENTICATION / INTERACTIVE GUIDE</div>
+  <h1>認証のしくみを、<br class="mobile">比べて学ぶ。</h1>
+  <p class="lead">同じログイン。その裏側では、何が違う？<br>SessionとJWTを動かして、ブラウザとサーバーの役割を観察しよう。</p>
+  <aside class="concept"><span class="concept-icon">↔</span><div><strong>Cookieは「保存して、送る」しくみ。</strong><p>SessionやJWTと同列の認証方式ではありません。このデモでは、どちらの方式もCookieで認証情報を送ります。</p></div><span class="tag">まずはここから</span></aside>
+  <div class="workspace-heading"><h2>01 <span>ログインして比較する</span></h2><span class="demo-account">テストアカウント <code>student</code> / <code>demo-password</code></span></div>
+  <div class="comparison" id="comparison"></div>
+  <section class="knowledge"><h2>02 <span>違いを整理する</span></h2>
+    <div class="table-scroll"><table><caption class="sr-only">Session認証とJWT認証の比較</caption><thead><tr><th>比較すること</th><th>Session認証</th><th>JWT認証</th></tr></thead><tbody>
+    <tr><th>Cookieに入るもの</th><td>Session ID（情報を探すための鍵）</td><td>JWT（署名付きの情報）</td></tr>
+    <tr><th>サーバーでの確認</th><td>ストア内のSessionを検索する</td><td>JWTの署名と有効期限を検証する</td></tr>
+    <tr><th>ログイン状態の保存</th><td>サーバー側に保存する</td><td>このデモでは保存しない</td></tr>
+    <tr><th>ログアウト</th><td>Session破棄 ＋ Cookie削除</td><td>Cookie削除。JWT自体は期限まで有効</td></tr>
+    <tr><th>得意なこと / 注意点</th><td>即時に失効できる / 保存先の管理が必要</td><td>複数サーバーで検証しやすい / 即時失効には追加の仕組みが必要</td></tr>
+    </tbody></table></div>
+  </section>
+  <section class="knowledge"><h2>03 <span>JWTを構成する3つのパーツ</span></h2><div class="jwt-parts"><article><span class="part-label">01 / HEADER</span><h3>どう検証する？</h3><p>署名アルゴリズムなどの情報。このデモはHS256のみ許可します。</p></article><article><span class="part-label">02 / PAYLOAD</span><h3>どんな情報？</h3><p>ユーザーIDや有効期限。暗号化ではなく符号化なので、秘密情報は入れません。</p></article><article><span class="part-label">03 / SIGNATURE</span><h3>改ざんされていない？</h3><p>HeaderとPayloadから秘密鍵で作る署名。サーバーが検証します。署名値は画面に返しません。</p></article></div></section>
+  <section class="security"><h2>安全に学ぶためのポイント</h2><div class="security-grid"><p><strong>HttpOnly</strong>JavaScriptによるCookieの読み取りを制限。画面の情報はサーバーが返した学習用データです。</p><p><strong>SameSite=Lax ＋ CSRF対策</strong>Cookieの送信条件を制限。ログイン・ログアウトではOriginと専用ヘッダーも検証します。</p><p><strong>Secure</strong>HTTPS経由での送信を要求する属性。ローカルHTTPではfalse。本番はHTTPSとSecureが必要です。</p></div><p class="footnote">学習専用：固定パスワード・MemoryStoreを使用しています。本番利用向けではありません。詳しくはREADMEをご覧ください。</p></section>
+</main><footer><span class="brand">AuthCompare</span><span>観察する → 試す → 自分の言葉で説明する</span></footer>
+</body></html>

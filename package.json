@@ -1,0 +1,11 @@
+{
+  "name": "auth-compare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cookie・Session・JWTの仕組みを比較するローカル学習アプリ",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": { "start": "node --env-file=.env server.js", "dev": "node --watch --env-file=.env server.js", "test": "node --test" },
+  "dependencies": { "cookie-parser": "^1.4.7", "express": "^5.1.0", "express-session": "^1.18.2", "jsonwebtoken": "^9.0.2" },
+  "devDependencies": { "supertest": "^7.1.1" }
+}
